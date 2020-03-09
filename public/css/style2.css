@@ -1,0 +1,36 @@
+/*--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+--*/
+
+.hotel-left {
+	/* float:left; */
+    width: 400px;
+    background: rgba(1, 10, 19, 0.69);
+    padding: 3em 3em 0;
+	margin : 14% auto;
+    opacity: 1
+}
+
+.pay_form form input[type="text"] ,.pay_form form input[type="password"]{
+    width: 100%;
+    padding: 0.7em 2.7em 0.7em 0.7em;
+    font-size: 14px;
+    border: none;
+    border-bottom: 2px solid #e6e6e6;
+    outline: none;
+    color: #000000;
+    margin-bottom: 40px;
+}
+
+
+
+
+.pay_form h2 {
+    color: #FFFFFF;
+    font-size: 30px;
+    margin-bottom: 30px;
+	font-family:"Salsa",cursive
+}
