@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{asset('css/sweetalert.css')}}">
     <style type="text/css">
         body {
+
             background-size: 100% auto;
         }
 
@@ -22,6 +23,7 @@
             opacity: 0.9;
             text-align: center;
         }
+
         p > span {
             color: #ff0000;
         }
@@ -37,19 +39,37 @@
             </p>
         </div>
         <div class="col-md-3 links">
-            <h6><a href="/scout/public/categories" >Home</a></h6>
-            <h6><a href="/scout/public/notifications">Notifications</a></h6>
-            <h6><a href="/scout/public/add_category"
+            <h6><a href="{{ url('/categories') }}">Categories</a></h6>
+
+            @if (Session::has('X'))
+                <h6><a href="{{ url('/notifications') }}">Notifications</a></h6>
+            @else
+                <h6><a href="{{ url('/demands') }}">Demands</a></h6>
+            @endif
+
+            <h6><a href="{{ url('/add_category') }}"
                    @if (Session::has('X'))
                    style="display: none"
                     @endif>Modify categories</a></h6>
-            <h6><a href="/scout/public/home">Logout</a></h6>
+
+            <!-- <a href="{{ url('/changePassword') }}"> Change Password </a>
+            <br> -->
+            <a href="{{ route('logout') }}"
+               onclick="event.preventDefault();
+            document.getElementById('logout-form').submit();">
+                {{ __('Logout') }}
+            </a>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+
             <br>
             Date :{{$date ?? ''}}
             <br/>
             Time :{{$time ?? ''}}
         </div>
-        </div>
+    </div>
 </header>
 </body>
 

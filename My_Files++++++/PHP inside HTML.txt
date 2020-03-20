@@ -1,0 +1,10 @@
+﻿	<!-- used for repeating ....instead of typing the same code multiple times -->
+
+		<!-- @while ($sections)
+		<div class="col-md-3">
+			<div class="img-thumbnail">
+				<img src="/images/{{<?php $sections2=json_decode($sections); echo $sections2[0]; ?>->image_name}}" style="width:100%;height: 770px">
+				<h1><a class="btn btn-primary">{{<?php $sections2=json_decode($sections); echo $sections2[0]; ?>->section_name}}</a></h1>
+			</div>
+		</div>
+		@endwhile -->

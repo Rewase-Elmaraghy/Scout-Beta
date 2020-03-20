@@ -15,31 +15,35 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-
-Route::group(['middleware'=>'MyMiddleware'],function()
-{
-    Route::get('categories','categoryController@index');
-    Route::get('eachCategory/{id}','categoryController@show');
-    Route::get('notifications','categoryController@notifications');                   //admin
-    Route::post('eachCategory/{id}/store','categoryController@store');
+Route::group(['middleware' => 'MyMiddleware'], function () {
+    Route::get('categories', 'categoryController@index');
+    Route::post('notifications', 'categoryController@notifications');                                        //admin
+    Route::get('notifications', 'categoryController@notifications');
+    Route::get('demands', 'categoryController@demands');                                                     //admin -----> validated
+    Route::post('store', 'categoryController@store');
     Route::get('/home', 'categoryController@index')->name('home');
 
-    Route::get('delete_notification/{id}','categoryController@delete_notification');  //admin
-    Route::get('accept_notification/{id}','categoryController@accept_notification');  //admin
+    Route::get('/changePassword', function () {return view('scoutViews.changePassword');});            // validation needed
+    Route::post('/change', 'categoryController@change')->name('change');                                     // validation needed
+    Route::get('/match', 'categoryController@match')->name('match');
 
-    Route::get('notifications_user/ack/{id}','categoryController@notifications_user_ack');
-    Route::get('notifications_user/cancel_request/{id}','categoryController@cancel_request');
+    Route::post('delete_notification', 'categoryController@delete_notification');                            //admin -----> validated
+    Route::post('accept_notification', 'categoryController@accept_notification');                            //admin -----> validated
+    Route::post('accept_all_notification', 'categoryController@accept_all_notification');                    //admin -----> validated
+    Route::post('delete_all_notification', 'categoryController@delete_all_notification');                    //admin -----> validated
 
-    Route::get('add_category','categoryController@add_category');                      //admin
-    Route::post('create','categoryController@create')->name('create');                 //admin
-    Route::post('update/{id}','categoryController@update');                            //admin
-    Route::get('delete/{id}','categoryController@destroy')->name('delete');            //admin
-    Route::get('restore/{id}','categoryController@restore')->name('restore');          //admin
-    Route::get('deleteForever/{id}','categoryController@deleteForever')->name('deleteForever');               //admin
+    Route::get('notifications_user/ack/{id}', 'categoryController@notifications_user_ack');
+    Route::get('notifications_user/cancel_request/{id}', 'categoryController@cancel_request');
+
+    Route::get('add_category', 'categoryController@add_category');                                           //admin -----> validated
+    Route::post('create', 'categoryController@create')->name('create');                                      //admin
+    Route::post('update/{id}', 'categoryController@update');                                                 //admin
+    Route::get('delete/{id}', 'categoryController@destroy')->name('delete');                                 //admin -----> validated
+    Route::get('restore/{id}', 'categoryController@restore')->name('restore');                               //admin -----> validated
+    Route::get('deleteForever/{id}', 'categoryController@deleteForever')->name('deleteForever');             //admin -----> validated
+
 });
-
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+

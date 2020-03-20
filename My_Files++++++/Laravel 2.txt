@@ -1,0 +1,141 @@
+﻿#for restful controllers.....--->>Route::controller('library','sectionController');    supposed to be for (restful controllers) 
+
+#Route::controller could not work as it's old so we type instead Route::resource.....and the command which we use to create new controller we type --resource at its end
+---->> php artisan make:controller sectionController --resource ....so a new controller will be created containing the established functions without the need to be created by us (resource controllers)
+
+#we create a folder named for example "libraryViewsContainer" into views folder then we create file "library.blade.php" inside the  created folder  
+
+#we can passs values (must be array) with two different ways .....(1) inside view brackets-->>return view('libraryViewsContainer.library',$arrayOfObjects);   
+                                                                  (2) using with ---->>return view('libraryViewsContainer.library')->with('','');
+#we can make these variables as follows ---->> $date = date('y-m-d'); $time = date('H:i:s'); $arrayOfObjects = ['date'=>$date, 'time'=>$time]; 
+                                               return view('libraryViewsContainer.library',$arrayOfObjects);
+                                            or return view('libraryViewsContainer.library',compact('date','time'));  in which compact function turns values into array
+                                            or return view('libraryViewsContainer.library')->with('date',$date)->with('time',$time);
+                                            or return view('libraryViewsContainer.library')->withDate($date)->withTime($time);
+//the name must start with a capital letter and the variable must start with a small letter with the same exact name
+
+#to check whether there is database or not and check a specific table we type cmd commands ---->>
+php artisan tinker
+DB::table('table_name_we_put_before')->get();
+then all columns will appear with its data of that existed table
+
+#to deal with database (create/read/update/delete) or CRUD is done using Query Builder or Eloquent ORM
+
+#to use the first technique (Query Builder) we type ---->> use DB; in sectionContrller.php
+
+#LTS means long-term support and laraveln 5.5 is a LTS
+
+#api.php found in folder routes used when publishing the project online (web service/android/IOS/microsoft)
+
+#action in a form means where the data of the form will be sent to, method is the way this data will be sent, and enctype defines that there are files will be uploaded from this form.
+
+#we need a HTML package to write a blade form
+
+#before downloading packages we have to make sure that protocol type is "https" for the repository we will download packages from it.
+
+#to make it "https"...we write the next command in the beginning of "composer.json" file (and don't forget the last comma) ------>> "repositories": [{"type":"composer","url":"https://packagist.org"}],
+
+#then we go to packagist and type html to download html package ...and then we choose the best package and then we type its command in cmd
+
+#double {} = {{ }} means escaping from html tags......so in order not to escape we type {!! Form::open() !!} for example ...with double !!
+
+#we can type the following command in cmd to check if there is any error in composer and follow instructions ------> composer diagnose
+
+#to update composer and laravel/framework itself we type the (very good, useful and powerful) command ---->> composer update 
+
+#when downloading or doing any thing in cmd ....if a message appears about you run out of memory just modify memory_limit in "php.ini" file to be =-1
+
+#Eloquent ORM is more advanced than query builder but after all its a query builder itself and can use query builder functions
+
+#to make Eloquent model (create an ordinary model as previously explained) ---->>> php artisan make:model Section 
+ 
+#softDeletes means delete to the user with the ability to be restored to the administration....so we create another column named "deleted at" and its type is timestamp
+
+#to activate softDeletes we type------>> use Illuminate\Database\Eloquent\softDeletes;  in model "Section" to use softDeletes class and then we type inside the model class ---->> use softDeletes;
+
+#if the column name is not deleted_at we type the command  --->> protected $dates = ["deleted at"]; 	
+
+#then when deleting it will appear as deleted but it will stay in DB and time of deletion will appear
+
+#$sections = Section::withTrashed()->get();  we added "withTrashed()->" before get to show even the "so-called" deleted items by the user....and that in admin function in sectionController
+
+#to modify the section or the record to be not deleted we adjust the "deleted_at" to be NULL and delete the date recorded
+
+#--->> @if($section->trashed()) ...command used with trashed() function in "admin.php" to declare whether this section is deleted by the user or not to operate specific action on it	
+
+#seeding means information Laravel provides randomly to test functions and pages you created = "dummy data"
+
+#seeds are in "database\seeds" in run functuion in "DatabaseSeeder.php" we type the command ---->> App\Section::insert(['section_name'=>'test','image_name'=>'test']);
+
+#admin account must be put as a seeder in database 
+
+#to do the seeds we type -->> php artisan db:seed .....but that's not the best ..as seeders where created to add massive data to db
+
+#to do so we go to "database\factories\UserFactory.php" then we create another function with "App\Section" or model directory inside define()..then we type names of columns to be filled followed by $faker as example 
+
+#in "DatabaseSeeder.php" we make the line we wrote a comment then we type -->> factory('App\Section',1000)->create();
+
+#we must create a controller of its own for "books" in order to be able to add/edit/delete books as done in "sections"
+
+#to make Eloquent Model to represent one to many relationship we need to make an Eloquent model like ---->> php artisan make:model Book
+
+#inside the model (Eloquent model) Section we will create a function that will Join  between that table (table sections) and table books
+
+#transaction means that the whole 'transaction' or procedure will not be executed at all only if all sub-transaction is excuted succesfully
+
+#sessions in PHP (and laravel) saves authentication data of the person who logins into database server ...but browsers save it as cookies
+
+#we open file -->> config/sessions where sessions settings are ....we will find a line where --->> 'driver' => env('SESSION_DRIVER', 'file'), ...this means sessions will be stored in a file in server -->>storage/framework/sessions 
+
+#we can modify the value of 'SESSION_DRIVER' in .env file to be anything other than file
+
+#to change type from 'session' to 'cookie' we change 'SESSION_DRIVER=file' in .env file to be 'SESSION_DRIVER=cookie'
+
+#in development stage (writing code) it's ok to use (session or cookies), but in production stage (final stage of development) it's better use (redis or memcached)
+
+#in authentication cofiguration can be found in 'config/auth.php'...and deafult class (model) used in authentication will be class 'user.php' created by laravel itself
+
+#the place to be directed to after clicking login and the user is verified ... is found in (LoginController.php) file
+
+#line to validate data before entering in DB ------> "$this->validate($request , ['section_name'=>'required|unique:sections,section_name|max:30','image'=>'image|max:1024|mimes:jpg']);" 
+where sections is the name of the table and section_name is the column's name
+
+#we can make a request to check the validity of data ...rather than checking inside store function
+
+#php artisan make:request storeSectionRequest
+
+#we type the request in function "rules" in the request created ...then we type the line -->> use App\Http\Requests\storeSectionRequest; in sectionController file
+and then we replace "Request" in () in store function in sectionController into "storeSectionRequest" 
+
+#compressed Jquery is preferably  used after completing the project (production)/ Uncomposed Jquery file is preferably used while developing
+
+#in order to use AJAX we have to put Jquery file into Js folder inside public folder
+
+#we put AJAX function inside function ready which won't run the code unless the page is completely loaded
+
+#inside script tags instead of a javascript file we can write the js commands inside the script tag
+
+#password section in "auth.php" is meant to be used in resetting/forgetting password so we modify it
+
+#we create the file "password.blade.php" in the folder  we will create "emails" inside views
+
+#we type the next command into the file --->>> "Click here to reset your password : {{url('/password/reset/'.$token)}}"
+
+#we modify $redirectTo into ResetPasswordController  in order to specify the direction after resetting password
+
+#in web.php and in many things ...URL\subURL\... we use '\' in URLs written in browser .....and   desktop/pc/c/.... we use '/' in directories inside pc folders
+
+#we must modify mail.php in config folder to establish email configration ...the sender's name and his/her email....and modify e,ail options in ".env" file
+
+
+
+#for pagination we download bootstrap..............here for pagination files we called them (testController.php/test.blade.php)
+
+#we use the middleware instead of typing validation in every function
+
+#We type the following command to create our own middleware >>> php artisan make:middleware MyMiddleware 
+
+#The files we will use here to make middleware not to allow guests to enter pages while not registered  with there contents...are
+MyMiddleware.php.......the middleware created with its function handle
+kernel .........we mention the directory of the middleware "MyMiddleware"...and we will use its name in web.php
+web.php.......the paths we don't want to accessed by a guest...will be put in a group........(or by adding ""->middleware('MyMiddleware');"" at the end of the route without grouping)

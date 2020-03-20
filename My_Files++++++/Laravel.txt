@@ -1,0 +1,355 @@
+﻿# MVC ..... is a design pattern (Methodology / caoding technique) not createdby Microsoft but used by them 
+(Model View Controller)...MVT (crerated after MVC stands for Model view Template)
+
+#Model--------> classses calls anything related to data (database/JSON...etc)/it could be anything including a table
+
+#View---------> responsible for showing (html/css)
+
+#Controller---> Controls the whole application /listens from and responds to
+
+#everything after the domain name is route.....http://www.google.com.eg/view/76....(view/76 is route)
+
+#there is a file in any application (eg. on a server) named routes contains all routes in the application
+
+#every route (if called)....go to the specific controller (for example, "products") which calls the action (method) inside....then controller calls the model
+
+#the model gets the specific information and delivers it back to the controller 
+
+#the controller gives the information to view to show it
+
+#we can use the next 3 commands to summon http methods--->>
+1)Route::get();....static using class route
+2)&router->get();...using object router
+3)get();....using the http method directly
+
+#the command---->>Route::get('user/{anything}',function($anything){return 'you have entedred = '.$anything;})// it's a function to show whatever you write in URL address after user/
+->where	('anything','[0-9]+');                                                                               // we add this line (with deleting ; from the previous line) we only show numbers 
+                                                                                                             //after /user elsewise an error appears
+
+#to show a 404 page of your design (error page when pages are not found) -->> inside resources/views we create a folder, we name it errors then inside it we create a file named---> "404.blade.php"
+so that the contents of this file will appear when page entered by user is not found
+
+#----->> Route::get('/goo', function () {                                            
+         return Redirect::to ('foo');});                      // the function to is static in class Redirect which redirects the user to a specific page when entering another specific page 
+
+#the types of controllers are in "Controllers.png" in the same folder of that text document
+
+#download "composer" utility for php then open cmd and write command--->  composer create-project laravel/laravel my_blog --prefer-dist
+
+#we must be connected to the internt to create a new project from laravel from github website repo
+
+#the composer reads commands stored in "composer.json" file and then it contacts with website http://packagist.org/ as it's an open source contains packages
+
+#the contents of "composer.json" will be created by the user itself not like "composer.lock" which its contents will be stored using the composer itself
+
+#pakages will be stored in folder vendor and versions of these packages will be stored in "composer.lock" file
+
+#composer will create a file named "autoload.php" inside vendor folder which automatically will summon all classes in packages will be used inside laravel project
+
+#we can download laravel from its website and then create any project from it offline
+
+#laravel/laravel is the repo of laravel....my_blog is the name of the project 
+
+#--prefer-dist is the previous last version of laravel not the last as the last in any program (not only laravel) is a beta version ...not stable and changable
+
+#command----> cd my_blog  then---->  php artisan serv --port 9001     to start up the server on port 9001
+
+#after creating the project folders appear...... app/http/controller .....contains the base controller which all controllers inherits it
+
+#public folder contain everything static...(e.g. fonts/photos/css/html/js)
+
+#folder resources contains views which in turn contains all views and pages
+
+#extension of any laravel page is ".blade.php" not just ".php" 
+
+#we write code in a file with php extension to make it understand php syntax if written in it....
+so we make a file with .blade.php extension to make the file understand if we write blade syntax in it.
+
+#inside folder routes...api---> contains routes between applications (any platform outside the website..satelite/mobiles...etc)     
+....................and web---> contains routes between website and another
+
+#inside folder config contains file database which has all databases supported ...(mysql/sqlserver..etc) about 72 types of database supported even bigdata
+
+#we can add configuration for oracle database
+
+#we can find data for every database...like username password..etc  it's taken by default from file env and if not it's taken from values written in database file
+
+#in env file we can modify values of database like database name/username/password
+
+#migration--->means expressing databases using classes...and converts classes into tables in database and creates them (like ADF,PrimeFaces and JBA)
+
+#advantages of migration....modifying database while working
+  
+#you can activate mysql server by typing----> C:\xampp\mysql\bin\mysqld.exe ----> then type ----> mysql the you enter mysql command line and if you want get out to bash (ordinary cmd) type exit
+
+#you will find MariaDB is established....then type command --->create database myblog...if not alowed type exit to exit mysql command line then type in the bash --->mysql -u root-p
+it will ask for the password try root if not ....try pressing [enter] when succeeding you will find message ----> [query ok,1 row affected]....then command----> use myblog
+
+#csrf....to ensure that we can be online for a website ...we have to be sure that the website doesn't have a csrf as a security demand
+
+#command ----> use myblog........   command ----> show tables      to see database but when it's just created it will be empty
+
+#any command ----> php artisan... should be written in the directory of the project's name and here it's my_blog
+
+#for no username/password issues in database ......the username and password in .env file must be like username and password in database
+
+#we write command----> php artisan migrate ....which migrates tables (migration, user) in database ....but the server must be off 
+(closed the cmd which wrote php artisan serv or the command not written yet)
+
+#when typing the previous command (of migrate) if error appeared about "Specified key too long;" and password_resets table is not shown ......
+we write in "AppServiceProvider.php" in the project's file the lines ---->> use Illuminate\Support\Facades\Schema; ...... in the use section 
+and............................................................line------>> Schema::defaultStringLength(150); (or any number other than 150....191 maybe) ......inside the boot method
+this error happens because of number of characters is not defined or too long.....it appears in old mysql versions or MariaDB but not in new mysql versions
+
+#table password_resets_table is created by Laravel and used to take token with password in order to prevent CSRF (hole) and the website must have not CSRF (hole) before being online
+
+#using laravel you won't need to deal with security issues with possibility of 85-90 %
+
+#for creating a whole login form with registeration type only one command ---->php artisan make:auth...then auth pages are created in auth folder into resources and can be modified
+
+#we can now register and login from laravel page and the accounts we use will be stored in database
+
+#laravel made registeration and login very easy to help the php developer as no website doesn't contain a login or registeration page
+
+#the MVC framework disadvantage is that it's a closed source
+
+#the password in Laravel is secured and encrypted using blowfish (indian algorithm) .....a very modern algorithm of encryption...previously used aircrack
+
+#any password encryption is one way....and password must never be a	 plain text (as it is;not encrypted) in database, it must be encrypted
+
+#Laravel server depends on ngineX not Apachi and it has higher traffic than Apachi so that it can be stronger (not immune against) in server attacks like DoS 
+
+#the DoS (Denial of Service) attack is untraceable....its only solution is contacting with CloudFlare company as they have very strong servers so they put your servers among many of thier strong servers
+then they make a load balancer ...so that the many fake requets of DoS is on them and the true requets come to your server....but it's very expensive solution as it counts by second...
+sor for some it's cheaper to cut the service than calling CloudFlare.
+
+#DoS attacks are costy even for attackers not only for receivers......so they made DDoS attack (Distributed Dos) to send DoS from millions of computers around the world
+
+#difference between encoding and encryption is that encoding doesn't need a key to solve it
+
+#CSRF stands for Cross-Site Request Forgery it makes the user do unwanted actions ...it's basically written in HTML so that the user can add e-mails, passwords or even accounts without knowing when clicking on a link, we can say it's
+" unauthorized commands are performed on behalf of an authenticated user."
+
+#Laravel automatically generates a CSRF "token" for each active user session managed by the application. This token is used to verify that the authenticated user is the one actually making the requests to the application.
+
+#Anytime you define an HTML form in your application, you should include a hidden CSRF token field in the form so that the CSRF protection middleware can validate the request. You may use the @csrf Blade directive to generate the token field: ---->
+<form method="POST" action="/profile">
+@csrf
+ ...
+</form>
+
+#blowfish algorithm is a symmetric type which means the key is the same in ciphering and deciphering
+
+#we can write a DoS attack command like -----> slowloris.pl -dns 127.0.0.1 -port 80...  as 127.0.0.1 is the ip of the server i want to attack on apachi (when can not write any port so we attack the whole server)
+(when we are standing on the folder containing slowloris.pl file)
+
+#to use slowloris.pl we have to get ActivePerl downloaded and DVWA as a dummy website on localhost(xampp/htdocs/) to test the security attacks you create
+
+#if any error appeared while downloading DVWA ....follow the instructions and read the (README.md) file
+
+#we can make command---->> php artisan make --help  to show everything available for that command
+
+#command ---->> php artisan make:controller HomeController...as Homecontroller is the name of the controller it creates controller, customizes routes and creates views
+it's created in directory ...app\http\controllers
+
+
+#in web.php we write line----> Route::get('/abc', 'HomeController@welcome');  // welcome is the name of the function
+                                                                              // anything comes to abc it directs it to HomeController
+                                                                              // then it calls the function named welcome in HomeController
+which means the route /abc if written on website it directs me to controller i created named HomeController which in turn directs me to function named welcome in controller named HomeController
+so i create that function (function is named action in MVC) into HomeController which can do anything, we write such a command---->> return view('rock');      // if rock is in folder pages we write return view('pages.rock'); 
+which in turn will show the page (view) named rock....which i can write anything in it (e.g. welcome message as a test)
+
+#if the function i gave in web.php doesn't exist in the controller specified it goes to the default page and happens in any project in php (index.php or login.php ) 
+
+#I create a master-page contains everything that will be repeated and in it i include other things
+
+#layouts inside views inside resources contains basic pages (master-pages)....so we create another main page such as "main.blade.php"
+
+#we download bootstrap from getbootstrap website and we copy its css and js pages into folders css and js into my project
+
+#it's better to take your copy of bootstrap pages offline ....in order to work even if the intenet is down and for the website not to be changed or malfunctioned when bootstrap developers change its files online
+
+#to search how to link laravel to css (files) we type "laravel blade css style" in search engine we choose laravel.com/docs (documentation) and laracast is better...
+so the link will be like-->> {{HTML::style('css/bootstrap.min.css');}} (as anything in double curly brackets '}}' is blade syntax ) in the main page ("main.blade.php")
+
+#we then get a navbar code from anywhere (getbootstrap.com website) and put it into a div in body tag
+
+#we can't see page we created ("main.blade.php"), so we create a route which directs to this page 
+
+#an error will appear as class HTML we wrote in the head of the page is not defined, so we link "css/bootstrap.min.css" the ordinary way ---->> 
+<link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap.min.css')}}"> as asset is a blade syntax which works under public 
+
+#we used asset as it read directly from public folder ... and if we delete it we write the whole long directory of the file instead....so in larevel all directories must contain asset
+ 
+#we can replace "light" words by "dark" or "default" by "inverse" in navbar tag in order to make the theme black and more elegant 
+
+#tag <section> in html used to categorize things as divs 
+
+#we create a new directory (folder) inside views we name it "articles" and a "index.balde.php" inside it, which will be included into a master-page
+(which means a page will be loaded inside a master-page in order not to repeat our code in every page) 
+
+#we might have many master-pages in our project so we have to define each page which master-page is its parent using the following code....---->
+
+#---->    
+@extends('layouts.main')     <!-- it's a blade syntax which means you will be inside the master-page named "main" in folder "layouts" -->
+@section('content')          <!-- makes a content (like div in html) in blade -->
+<h1>I love Laravel</h1>
+@endsection
+
+
+#we type the command ---> <div>@yield('content')</div>    at the master-page which is "main" here as yield is a blade syntax which loads whatever in section named "content"
+
+#we type the next command in web.php ---->  
+ 
+Route::get('/test2', function () {
+    return view('articles.index');
+});
+
+#we can also make  a controller that calls a view ----> Route::get('/show','ArticlesController@show') ;
+
+#making a cntroller using the command------> php artisan make:controller ArticlesController .....
+
+#it's better to make a controller to put commands in rather then typing these commands in web.php file ...as the commands will be too many in the future, so we put it into a controller of its own                            
+ 
+#to make another migration file which creates another table we type the command ----> 
+php artisan make:migration create_articles_table --table=articles  (and that code is the same as command) --->> php artisan make:migration create_articles_table --create="articles"
+
+#in the migration file we just created....we mdify "schema" to be "create" and we type the next commands in it (in function up) ---->
+
+$table->increments('id');             //increments datatype means serial
+$table->string('title');              //string for titles
+$table->text('contents');             //text datatype is larger than string so it used with conent
+$table->dateTime('published_at');     //used to show the date the article will be published online automatically (with SQL command to assure that)
+$table->timestamps();                 //used to crete to columns in table...date created and last update for the row
+
+#we then type----> php artisan migrate .....to create the newly created migration file
+
+#in cmd used as a SQL (not the bash) we write ---> desc articles;  so as to describe the table articles
+
+#mongoDB....is a database that has now tables
+
+#every table in database must be created as a migrated file
+
+#in create_articles_table or any table file .....the function up is the function used when migrating the table.....
+while the function down is the function used when rolling back the tables (deleting them)....so we need to reverse the commands in down function the commands used to create tables in up function 
+---> Schema::drop('articles');
+
+#when printing migrate:rollback ....Laravel does what is in function down and rollback means deleting the last migrate only
+
+#we delete tables manually if problems appear such as ------> drop table articles;   delete from migrations;
+
+#the command ----> php artisan migrate:refresh; means it rollback+migrate ...so it will delete the tables then it will migrate them again
+
+#when we need to add columnn in a table in database but we don't want to save the data inside the table from being altered...we make a migration file for the column itself and we migrate it 
+so the column will be added without erasing data ------>php artisan make:migration add_column_to_articles_table --table=articles....where what comes after migration is the name of the file i create
+
+#with --table=articles ....it means any modification or migration will be applied to table articles in database
+we write in fuction up ---> $table->string('notes')->after('contents');           //creating column and specifying its place among columns
+and in function down   ---> $table->dropColumn('notes'); 
+then we hit --> php artisan migrate ....then it will migrate the last latest created file which contains the column in the table articles
+
+#the order of creating and dropping tables is handled by me in relations not handled by Laravel itself
+
+#the route does things when it comes from get different to things when it comes from post we can write the two commands in web.blade.php
+--> Route::get('/articles/add', 'ArticlesController@add');
+    Route::post('/articles/add', 'ArticlesController@store'); ....but the deafault method in form is get, so when i need to change i should type method="POST" in form in HTML syntax
+
+#every link written in browser then "enter" this is "GET" not "POST".....as "GET" gets information FROM the server while "POST" gives information to the server
+
+#anything that submits in Laravel (form for example) 1).must be in url like ---> form action="{{url('/articles/add')}}" not form action="/articles/add" and 2).must also have something hidden that sends CSRF
+we type ---> {{csrf_field()}} inside the form after the form tag, it creates a hidden input which have a very long random text value...to make the request secured...
+and that code will appear when clicking "view page source" or "ctrl+u"...as ---->>   <input type="hidden" name="_token" value="NOTFX4OWtknxa0720yUR7YB3mE9FkXZO7lFzhcfb">
+and will be hashed if {{csrf_field()}} is hashed
+
+#Laravel has these codes encrypted into a text read-only file that can't be accessed and updated when updating composer
+
+#when i make an <iframe> tag and make it show another website, that means i send a request to that website to load it here in my page in that frame
+
+#another example of CSRF hole, we can put a malicious link which transfers 100$ to my account on paypal when opened...we make it hidden in that page and put it into src="" in iframe tag
+so that everyone who clicks that link puts 100$ in my paypal account
+
+#so CSRF token were put to distinguish requests (users or anything) from paypal website itself, and every request that doesn't have that token (obtained randomly from a database contains millions of one-time-usage tokens)
+is known to be from outside the website and not done
+
+#we must write the command -----> php artisan key:generate ....only one time in each project
+
+#in database table migrations column batch...defines in which round was these tables created....round 1 (1st time) round 2 (2nd time) ..etc
+
+# to make relations with another table we write commands....----->
+
+$table->foreign('user_id')                          // commands to make relations with another table
+        ->references('id')
+	->on('users')
+	->onDelete('cascade')
+        ->onUpdate('cascade');                      // so that the primary key here will be foreign key on table users refering to id on it
+
+#we can check if the realtion created or not from (relation view) inside (structure) in the table i created (in php my admin) 
+
+#there's no update cascade in oracle (updating in parent appears in child) but there is in mysql
+
+#we can change the website not to direct us to home after login...and that in "app/http/controllers/auth/logincontroller.blade.php" and change home to list page or any page i want in "$redirectTo"
+
+#we can leave home as it is and then change the function in web.php which defines what happens when go to home using get
+
+#in websites (which have login for example) when it's goes by get (to go to login page) ... it renders the page...when it goes by post it enters the account you want to login into
+
+#post and get are methods in http protocol 
+
+#we write the function --->> 
+public function add () {
+    	return view ('articles.add');           // this function only renders the page
+}
+in the function that is done by get to render (for example named add)
+
+#we write the function --->> 
+public function save (Request $request) {   // we write parameters in the function as it will recieve a parameter (request)
+$data = $request->all();                    // put all data coming when clicking save (all from request) in an array called $data
+		
+// $title =  $request -> title;             //these two lines are another way of obtaining values
+// $content =  $request -> content;
+	
+$title = $data['title'];                    // put the value came from input named title in variable title ($title)
+$content = $data['content'];                // put the value came from textarea named content in variable content ($content)
+		
+$author_id = Auth::user()->id;              // it gets the id of the user that is currently logged in and in turn the one who wrote the article and wants to save it
+		                            // as Auth is a class and user is a static function inside the class (id of that record) and (-> is similar to . in Java)
+		                            //This line will give an error when going to adding new article URL without logining as there is no user logined to obtain its id
+		                                       
+// $password = Auth::user()->password;      // we can use it to get anything inside table user                                      
+        
+                                            // to save in database we don't use "insert into ...." as a SQL command we have a model that deals with database instead.  
+// dd($author_id);                          // it's similar to var_dump(variable) in php           
+} 
+in the function that is done by get to render (for example named save)
+
+#if message appeared ---> "Class 'App\Http\Controllers\Auth' not found" then the class auth is not defined so we need to define it using the command ---->>
+"use Illuminate\Support\Facades\Auth;" in "ArticlesController.php" (or the controller created)
+
+#in order to save we must make a model that does the save action, so we write the command ----->>"php artisan make:model Article"
+
+#in Laravel if the name of the table is plural and the name of its controller is the singular name of that plural name ....they understand each other automatically
+
+#if you want to name the model anything else ...just write in its function ----->> protected $table = 'table_name_in_db'; where "table_name_in_db" is articles
+
+#in the model file (named here Article.php) we must write that function---->>>
+protected $fillable = [
+'title','contents','user_id',];                          // the names inside the brackets are the names of the columns that is needed to be filled
+
+#we write the next commands inside the save function in "ArticlesController" ---->> 
+Article::create(                                //this is the function that does the action save in database
+[
+'title'=>$title,
+'contents'=>$content,
+'user_id'=>$author_id;
+		]);      
+as well as the command ----->> "use App\Article;" at the top of the the "ArticlesController" file
+as well as the command ----->> "return view('articles.add');"            //this command is used to go to this page after finishing saving
+
+#there is more of that "Magic" in other languages such as in Ruby ....when write "scaffled" table "X" it automatically creates add,delete,edit and list pages.
+
+
+
+
+ 
+
