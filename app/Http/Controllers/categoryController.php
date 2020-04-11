@@ -47,8 +47,10 @@ class categoryController extends Controller
             session()->push('m', 'success');
             session()->push('m', 'There are no categories stored yet!');
         }
+		//dd($categories->available);
 
         return view('scoutViews.categories')->withDate($date)->withTime($time)->withCategories($categories);
+		
     }
 
     /**

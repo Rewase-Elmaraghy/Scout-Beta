@@ -30,7 +30,9 @@
             <br>
             <div class="col-sm-2"></div>
             <div class="col-sm-2">
-                <button id="Send_Request" class="btn btn-primary">Send Request</button>
+                <button id="Send_Request" class="btn btn-primary" @if(count($categories)== 0)
+                style="display: none"
+                @endif>Send Request</button>
             </div>
             <br><br><br><br>
 
